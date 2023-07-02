@@ -8,6 +8,7 @@ import {
 import { AuthContextType } from "./AuthContextType";
 import { executeJwtAuthenticationService } from "../api/AuthenticationApiService";
 import { apiClient } from "../api/ApiClient";
+import { registerUserService } from "../api/AuthenticationApiService";
 
 // 1: Create a Context
 
@@ -55,6 +56,20 @@ export default function AuthProvider({ children }: { children: ReactNode }) {
     }
   }
 
+  async function register(username: string, password: string) {
+    try {
+      const response = await registerUserService(username, password);
+
+      if (response.status === 201) {
+        return true;
+      } else {
+        return false;
+      }
+    } catch (error) {
+      return false;
+    }
+  }
+
   function logout() {
     setAuthenticated(false);
     setToken(null);
@@ -63,7 +78,7 @@ export default function AuthProvider({ children }: { children: ReactNode }) {
 
   return (
     <AuthContext.Provider
-      value={{ isAuthenticated, login, logout, username, token }}
+      value={{ isAuthenticated, login, logout, register, username, token }}
     >
       {children}
     </AuthContext.Provider>
