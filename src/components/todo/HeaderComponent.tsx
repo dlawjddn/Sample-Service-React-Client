@@ -47,6 +47,13 @@ function HeaderComponent(): JSX.Element {
                 )}
               </li>
               <li className="nav-item fs-5">
+                {!isAuthenticated && (
+                  <Link className="nav-link" to="/register">
+                    Register
+                  </Link>
+                )}
+              </li>
+              <li className="nav-item fs-5">
                 {isAuthenticated && (
                   <Link className="nav-link" to="/logout" onClick={logout}>
                     Logout
