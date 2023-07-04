@@ -4,7 +4,8 @@ import apiResponse from "./ApiResponse";
 export const registerUserService = (
   username: string,
   password: string
-): Promise<apiResponse> => apiClient.post(`/users`, { username, password });
+): Promise<apiResponse> =>
+  apiClient.post(`/api/register`, { username, password });
 
 export const executeJwtAuthenticationService = (
   username: string,
