@@ -88,11 +88,6 @@ function App() {
         >
           Save
         </button>
-        <button
-          style={{ width: "40%", marginTop: "20px", borderRadius: "5px" }}
-        >
-          Submit
-        </button>
       </MainDiv>
     </div>
   );
