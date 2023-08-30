@@ -1,8 +1,8 @@
+import React from "react";
 import { apiClient } from "../apis/apis";
-import { useState, useEffect } from "react";
 
 export const ScheduleList = () => {
-  const [scheduleData, setScheduleData] = useState([]); 
+  const [scheduleData, setScheduleData] = React.useState([]);
 
   const getSchedule = async () => {
     try {
@@ -14,15 +14,29 @@ export const ScheduleList = () => {
     }
   };
 
-  useEffect(() => {
+  const handleDelete = async (id) => {
+    try {
+      await apiClient.delete(`/schedule/${id}`);
+      setScheduleData((prevScheduleData) =>
+        prevScheduleData.filter((schedule) => schedule.id !== id)
+      );
+    } catch (error) {
+      console.error("Error deleting schedule:", error);
+    }
+  };
+
+  React.useEffect(() => {
     getSchedule();
   }, []);
 
   return (
     <div>
       <ul>
-        {scheduleData.map((schedule, index) => (
-          <li key={index}>{schedule.title}</li>
+        {scheduleData.map((schedule) => (
+          <li key={schedule.id}>
+            <span>{schedule.content}</span>
+            <button onClick={() => handleDelete(schedule.id)}>Delete</button>
+          </li>
         ))}
       </ul>
     </div>
