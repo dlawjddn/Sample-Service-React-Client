@@ -2,7 +2,7 @@ import "./App.css";
 import styled from "@emotion/styled";
 import { ScheduleList } from "./components/ScheduleList";
 import { useState } from "react";
-import { apiClient } from "./apis/apis"; 
+import { apiClient } from "./apis/apis";
 
 const MainDiv = styled.div`
   width: 393px;
@@ -42,9 +42,13 @@ function App() {
   };
 
   const handleSaveClick = async () => {
-    const scheduleContents = newSchedules.filter((schedule) => schedule.trim() !== "");
+    const scheduleContents = newSchedules.filter(
+      (schedule) => schedule.trim() !== ""
+    );
 
-    const requests = scheduleContents.map((content) => apiClient.post("/schedule", { content }));
+    const requests = scheduleContents.map((content) =>
+      apiClient.post("/schedule", { content })
+    );
 
     await Promise.all(requests);
   };
@@ -65,15 +69,22 @@ function App() {
             type="text"
             placeholder="새로운 스케줄을 입력해주세요"
             value={schedule}
-            onChange={(event) => handleScheduleChange(index, event.target.value)}
+            onChange={(event) =>
+              handleScheduleChange(index, event.target.value)
+            }
           />
         ))}
         <div>
           <ScheduleList />
         </div>
         <button
-          style={{ width: "40%", marginTop: "20px", borderRadius: "5px", marginRight: "20px" }}
-          onClick={handleSaveClick} // Call handleSaveClick function on click
+          style={{
+            width: "40%",
+            marginTop: "20px",
+            borderRadius: "5px",
+            marginRight: "20px",
+          }}
+          onClick={handleSaveClick}
         >
           Save
         </button>
