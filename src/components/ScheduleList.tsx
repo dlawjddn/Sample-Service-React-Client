@@ -1,8 +1,8 @@
-import { apiClient } from "../apis/apis";
 import { useState, useEffect } from "react";
+import { apiClient } from "../apis/apis";
 
 export const ScheduleList = () => {
-  const [scheduleData, setScheduleData] = useState([]); 
+  const [scheduleData, setScheduleData] = useState([]);
 
   const getSchedule = async () => {
     try {
@@ -14,6 +14,16 @@ export const ScheduleList = () => {
     }
   };
 
+  const handleDelete = async (scheduleId) => {
+    try {
+      await apiClient.delete(`/schedule/${scheduleId}`);
+      // After successful deletion, update the scheduleData state
+      setScheduleData(scheduleData.filter(schedule => schedule.scheduleId !== scheduleId));
+    } catch (error) {
+      console.error("Error deleting schedule:", error);
+    }
+  };
+
   useEffect(() => {
     getSchedule();
   }, []);
@@ -22,7 +32,10 @@ export const ScheduleList = () => {
     <div>
       <ul>
         {scheduleData.map((schedule, index) => (
-          <li key={index}>{schedule.title}</li>
+          <li key={index}>
+            {schedule.content}
+            <button onClick={() => handleDelete(schedule.scheduleId)}> X </button>
+          </li>
         ))}
       </ul>
     </div>

@@ -1,7 +1,8 @@
 import "./App.css";
 import styled from "@emotion/styled";
+import { ScheduleList } from "./components/ScheduleList";
 import { useState } from "react";
-import { NewSchedule } from "./components/NewSchedule";
+import { apiClient } from "./apis/apis"; 
 
 const MainDiv = styled.div`
   width: 393px;
@@ -17,11 +18,35 @@ const TextBox = styled.div`
   padding-top: 20px;
 `;
 
-function App() {
-  const [showNewSchedule, setShowNewSchedule] = useState(false);
+const Input = styled.input`
+  width: 85%;
+  padding: 10px;
+  margin: 10px 0 10px 0;
+  height: 40px;
+  background: whitesmoke;
+  border: none;
+  border-bottom: 2px solid black;
+`;
 
-  const toggleNewSchedule = () => {
-    setShowNewSchedule(!showNewSchedule);
+function App() {
+  const [newSchedules, setNewSchedules] = useState([]);
+
+  const addNewSchedule = () => {
+    setNewSchedules([...newSchedules, ""]);
+  };
+
+  const handleScheduleChange = (index, value) => {
+    const updatedSchedules = [...newSchedules];
+    updatedSchedules[index] = value;
+    setNewSchedules(updatedSchedules);
+  };
+
+  const handleSaveClick = async () => {
+    const scheduleContents = newSchedules.filter((schedule) => schedule.trim() !== "");
+
+    const requests = scheduleContents.map((content) => apiClient.post("/schedule", { content }));
+
+    await Promise.all(requests);
   };
 
   return (
@@ -30,13 +55,25 @@ function App() {
         <TextBox> Schedule </TextBox>
         <button
           style={{ width: "90%", marginTop: "20px", borderRadius: "5px" }}
-          onClick={toggleNewSchedule}
+          onClick={addNewSchedule}
         >
           {"Add"}
         </button>
-        {showNewSchedule && <NewSchedule onScheduleCreated={undefined} />}
+        {newSchedules.map((schedule, index) => (
+          <Input
+            key={index}
+            type="text"
+            placeholder="새로운 스케줄을 입력해주세요"
+            value={schedule}
+            onChange={(event) => handleScheduleChange(index, event.target.value)}
+          />
+        ))}
+        <div>
+          <ScheduleList />
+        </div>
         <button
           style={{ width: "40%", marginTop: "20px", borderRadius: "5px", marginRight: "20px" }}
+          onClick={handleSaveClick} // Call handleSaveClick function on click
         >
           Save
         </button>
