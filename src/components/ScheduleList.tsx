@@ -15,13 +15,12 @@ const Div = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 40px;
+  min-height: 40px;
   background: whitesmoke;
   border: none;
   border-bottom: 2px solid black;
-  margin-bottom: 10px;
   font-size: 20px;
-  overflow: hidden;
+  padding: 10px 0px 10px 0px;
 `;
 
 const Button = styled.button`
@@ -40,7 +39,6 @@ const Container = styled.div`
   flex-direction: column;
   align-items: center;
   text-align: left;
-  margin-top: 5px;
 `;
 
 export const ScheduleList = () => {
@@ -98,7 +96,7 @@ export const ScheduleList = () => {
 
   useEffect(() => {
     getSchedule();
-  }, []);
+  }, [scheduleData]);
 
   return (
     <Container>
@@ -114,8 +112,21 @@ export const ScheduleList = () => {
               <Button onClick={() => handleSaveEdit(schedule.id)}>Save</Button>
             </div>
           ) : (
-            <div>
-              <span>{schedule.content}</span>
+            <div
+              style={{
+                display: "flex",
+                flexDirection: "row",
+                width: "100%",
+                height: "100%",
+                alignItems: "center",
+                justifyContent: "center",
+              }}
+            >
+              <span
+                style={{ flex: "1", display: "flex", whiteSpace: "pre-wrap" }}
+              >
+                {schedule.content}
+              </span>
               <Button onClick={() => handleEditClick(schedule.id)}>✎</Button>
               <Button onClick={() => handleDelete(schedule.id)}>X</Button>
             </div>

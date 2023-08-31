@@ -51,8 +51,7 @@ function App() {
     );
 
     await Promise.all(requests);
-
-    window.location.reload();
+    setNewSchedules([]);
   };
 
   return (
