@@ -87,8 +87,8 @@ export const ScheduleList = () => {
       await apiClient.patch(`/schedule/${id}`, {
         content: scheduleToUpdate.content,
       });
-
       setEditingId(null);
+      window.location.reload();
     } catch (error) {
       console.error("Error updating schedule:", error);
     }
