@@ -51,6 +51,8 @@ function App() {
     );
 
     await Promise.all(requests);
+
+    window.location.reload();
   };
 
   return (
