@@ -51,6 +51,7 @@ function App() {
     );
 
     await Promise.all(requests);
+    setNewSchedules([]);
   };
 
   return (
