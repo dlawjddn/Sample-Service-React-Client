@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { apiClient } from "../apis/apis";
 import styled from "@emotion/styled";
 
@@ -22,7 +22,7 @@ const Div = styled.div`
   margin-bottom: 10px;
   font-size: 20px;
   overflow: hidden;
-  `;
+`;
 
 const Button = styled.button`
   background: whitesmoke;
@@ -102,30 +102,26 @@ export const ScheduleList = () => {
 
   return (
     <Container>
-        {scheduleData.map((schedule) => (
-          <Div key={schedule.id}>
-            {editingId === schedule.id ? (
-              <div>
-                <Input
-                  type="text"
-                  value={schedule.content}
-                  onChange={(event) => handleEditChange(event, schedule.id)}
-                />
-                <Button onClick={() => handleSaveEdit(schedule.id)}>
-                  Save
-                </Button>
-              </div>
-            ) : (
-              <div>
-                <span>{schedule.content}</span>
-                <Button onClick={() => handleEditClick(schedule.id)}>
-                  ✎
-                </Button>
-                <Button onClick={() => handleDelete(schedule.id)}>X</Button>
-              </div>
-            )}
-          </Div>
-        ))}
+      {scheduleData.map((schedule) => (
+        <Div key={schedule.id}>
+          {editingId === schedule.id ? (
+            <div>
+              <Input
+                type="text"
+                value={schedule.content}
+                onChange={(event) => handleEditChange(event, schedule.id)}
+              />
+              <Button onClick={() => handleSaveEdit(schedule.id)}>Save</Button>
+            </div>
+          ) : (
+            <div>
+              <span>{schedule.content}</span>
+              <Button onClick={() => handleEditClick(schedule.id)}>✎</Button>
+              <Button onClick={() => handleDelete(schedule.id)}>X</Button>
+            </div>
+          )}
+        </Div>
+      ))}
     </Container>
   );
 };
