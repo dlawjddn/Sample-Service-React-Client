@@ -3,34 +3,44 @@ import { apiClient } from "../apis/apis";
 import styled from "@emotion/styled";
 
 const Input = styled.input`
-  width: 70%;
+  width: 76%;
   height: 40px;
   background: whitesmoke;
   border: none;
-  border-bottom: 2px solid black;
-  margin-bottom: 10px;
+  margin-bottom: 2px;
 `;
 
 const Div = styled.div`
   width: 85%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   height: 40px;
   background: whitesmoke;
   border: none;
   border-bottom: 2px solid black;
-  padding-top: 10px;
   margin-bottom: 10px;
-`;
+  font-size: 20px;
+  overflow: hidden;
+  `;
 
 const Button = styled.button`
-  padding: 10px;
   background: whitesmoke;
   border-radius: 10px;
-  height: 20px;
   text-align: center;
+  font-size: 18px;
+  align-items: center;
+  justify-content: center;
+  margin-left: 10px;
 `;
 
 const Container = styled.div`
   width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: left;
+  margin-top: 5px;
 `;
 
 export const ScheduleList = () => {
@@ -92,11 +102,10 @@ export const ScheduleList = () => {
 
   return (
     <Container>
-      <ul>
         {scheduleData.map((schedule) => (
           <Div key={schedule.id}>
             {editingId === schedule.id ? (
-              <Container>
+              <div>
                 <Input
                   type="text"
                   value={schedule.content}
@@ -105,19 +114,18 @@ export const ScheduleList = () => {
                 <Button onClick={() => handleSaveEdit(schedule.id)}>
                   Save
                 </Button>
-              </Container>
+              </div>
             ) : (
               <div>
                 <span>{schedule.content}</span>
                 <Button onClick={() => handleEditClick(schedule.id)}>
-                  Edit
+                  ✎
                 </Button>
                 <Button onClick={() => handleDelete(schedule.id)}>X</Button>
               </div>
             )}
           </Div>
         ))}
-      </ul>
     </Container>
   );
 };
